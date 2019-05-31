@@ -20,9 +20,9 @@ def test(model, test, shift=10000):
         hits = pd.merge(hits, truth, how='left', on='hit_id')
         print(e, "Test")
         # the +10000 shifts the event space into a non-negitive space, the model won't take negitives
-        hits['x'] = hits['x'] + shift
-        hits['y'] = hits['y'] + shift
-        hits['z'] = hits['z'] + shift
+        hits['x'] += shift
+        hits['y'] += shift
+        hits['z'] += shift
         # Predicts the test set
         hits['particle_id'] = model.predict(
             hits[['hit_id', 'x', 'y', 'z', 'volume_id', 'layer_id', 'module_id', 'event_id', 'ch0', 'ch1', 'value']].values, verbose=1)
