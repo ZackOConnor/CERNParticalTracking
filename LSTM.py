@@ -54,9 +54,9 @@ for e in train:
     hits = pd.merge(hits, truth, how='left', on = 'hit_id')
     print(e,"Train")
     #applies the shift to eliminate negitive numbers
-    hits['x'] = hits['x']+shift
-    hits['y'] = hits['y']+shift
-    hits['z'] = hits['z']+shift
+    hits['x'] += shift
+    hits['y'] += shift
+    hits['z'] += shift
     # Fits the model
     # Batch Size and epoch were choosen with shortest training time
     hits['particle_id'] = model.fit(hits[['hit_id','x','y','z','volume_id','layer_id','module_id','event_id','ch0','ch1','value']].values,hits['particle_id'],batch_size=10000, epochs = 1)
@@ -75,9 +75,9 @@ for e in test:
     # Pulls in all needed data from the diffrent folders on a event by even bases
     print(e,"Test")
     # the +10000 shifts the event space into a non-negitive space, the model won't take negitives
-    hits['x'] = hits['x']+shift
-    hits['y'] = hits['y']+shift
-    hits['z'] = hits['z']+shift
+    hits['x'] += shift
+    hits['y'] += shift
+    hits['z'] += hift
     # Predicts the test set
     hits['particle_id'] = model.predict(hits[['hit_id','x','y','z','volume_id','layer_id','module_id','event_id','ch0','ch1','value']].values,verbose=1)
     df_test.append(hits[['event_id','hit_id','particle_id']].copy())
