@@ -21,9 +21,9 @@ def train(model, train, shift=10000, polar=0):
         hits = pd.merge(hits, truth, how='left', on='hit_id')
         print(e, "Train")
         #applies the shift to eliminate negitive numbers
-        hits['x'] = hits['x'] + shift
-        hits['y'] = hits['y'] + shift
-        hits['z'] = hits['z'] + shift
+        hits['x'] += shift
+        hits['y'] += shift
+        hits['z'] += shift
         #If polar coordinate are turned on, calculate the radious and theta and use them to train the model
         if polar == 1:
             hits['radius'] = np.sqrt(hits['y']*hits['y']+hits['x']*hits['x'])
